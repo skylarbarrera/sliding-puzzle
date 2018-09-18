@@ -92,6 +92,7 @@ public interface PuzzleState {
 	 * @return previously stored Operation or null if there is none.
 	 */
 	public Operation getOperation() ;
+	public void printArr();
 
 	/**
 	 * Get length of the path from initial state to the current state.
