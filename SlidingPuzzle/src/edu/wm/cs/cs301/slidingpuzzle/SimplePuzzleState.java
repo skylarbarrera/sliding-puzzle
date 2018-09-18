@@ -72,15 +72,18 @@ public class SimplePuzzleState implements PuzzleState {
 		}
 		
 		SimplePuzzleState state = (SimplePuzzleState)obj;
-		if (!java.util.Arrays.deepEquals(state.puzState,this.puzState)) {
-			//System.out.println("Puzstates are not the same");
-			return false;
-		}
 		
+		
+		if (java.util.Arrays.deepEquals(state.puzState,this.puzState)) {
+			System.out.println("Puzstates are the same");
+			return true;
+		}
 		if (this.hashCode() == obj.hashCode()) {
 			System.out.println("same hash");
 			return true;
 		}
+		
+		
 		System.out.println("NOT same hash");
 
 		System.out.println("not equal");
@@ -91,7 +94,7 @@ public class SimplePuzzleState implements PuzzleState {
 	@Override
 	public int hashCode() {
 		int hasher = 31;
-		hasher = dimen * 12 * hasher  + empty1[0] - length ;
+		hasher = dimen * 12 * hasher  + empty1[0] + empty1[1] ;
 		//System.out.println(hasher);
 		return hasher;
 	}
@@ -228,23 +231,23 @@ public class SimplePuzzleState implements PuzzleState {
 		this.next = nextState;
 		
 		if (op == Operation.MOVEUP) {
-			System.out.println("move up");
-			System.out.println(stateOperation);
+			//System.out.println("move up");
+			//System.out.println(stateOperation);
 			nextState.stateOperation = Operation.MOVEUP;
-			System.out.println("AFTER " + stateOperation);
+			//System.out.println("AFTER " + stateOperation);
 		
 			nextState.puzState[row-1][column] =  nextState.puzState[row-1][column] ^ nextState.puzState[row][column] ^ ( nextState.puzState[row][column] = nextState.puzState[row-1][column] );
 			nextState.newLength();
 		}
 		
 		if (op == Operation.MOVEDOWN) {
-			System.out.println("move down");
+			//System.out.println("move down");
 			nextState.stateOperation = Operation.MOVEDOWN;
 			nextState.puzState[row+1][column] =  nextState.puzState[row+1][column] ^ nextState.puzState[row][column] ^ ( nextState.puzState[row][column] = nextState.puzState[row+1][column] );         
 			nextState.newLength();
 		}
 		if (op == Operation.MOVELEFT) {
-			System.out.println("move left");
+			//System.out.println("move left");
 			nextState.stateOperation = Operation.MOVELEFT;
 			nextState.puzState[row][column-1] =  nextState.puzState[row][column-1] ^ nextState.puzState[row][column] ^ ( nextState.puzState[row][column] = nextState.puzState[row][column-1] );         
 			nextState.newLength();
@@ -275,9 +278,9 @@ public class SimplePuzzleState implements PuzzleState {
 		// array to give all possible moves, {up, down, left , right}
 		int[] possMovesArr = {0,0,0,0};
 		if (row > 3 || column >3) {
-			System.out.println("ERROR ERROR");
+			//System.out.println("ERROR ERROR");
 		}
-		System.out.println("row col" + row + " " + column);
+//		System.out.println("row col" + row + " " + column);
 
 		if (row == 9 ) {
 			return possMovesArr;
@@ -345,7 +348,7 @@ public class SimplePuzzleState implements PuzzleState {
 			
 		}
 		//System.out.println("printing Empty Poss");
-		System.out.println(java.util.Arrays.toString(possMovesArr));
+		//System.out.println(java.util.Arrays.toString(possMovesArr));
 		return possMovesArr;
 	}
 
@@ -539,25 +542,25 @@ public class SimplePuzzleState implements PuzzleState {
 		this.next = nextState;
 		
 		if (op == Operation.MOVEUP) {
-			System.out.println("move up");
-			System.out.println(stateOperation);
+			System.out.println("move up drag");
+			//System.out.println(stateOperation);
 			nextState.stateOperation = Operation.MOVEUP;
-			System.out.println("AFTERDRAG" + stateOperation);
+			//System.out.println("AFTERDRAG" + stateOperation);
 		
 			nextState.puzState[row-1][column] =  nextState.puzState[row-1][column] ^ nextState.puzState[row][column] ^ ( nextState.puzState[row][column] = nextState.puzState[row-1][column] );
 			nextState.newLength();
 		}
 		
 		if (op == Operation.MOVEDOWN) {
-			System.out.println("move down");
+			System.out.println("move down drag");
 			nextState.stateOperation = Operation.MOVEDOWN;
 			nextState.puzState[row+1][column] =  nextState.puzState[row+1][column] ^ nextState.puzState[row][column] ^ ( nextState.puzState[row][column] = nextState.puzState[row+1][column] );         
-			System.out.println("move DOWN drag");
+			//System.out.println("move DOWN drag");
 			//nextState.printArr();
 			nextState.newLength();
 		}
 		if (op == Operation.MOVELEFT) {
-			System.out.println("move left");
+			System.out.println("move left drag");
 			nextState.stateOperation = Operation.MOVELEFT;
 			nextState.puzState[row][column-1] =  nextState.puzState[row][column-1] ^ nextState.puzState[row][column] ^ ( nextState.puzState[row][column] = nextState.puzState[row][column-1] );         
 			nextState.newLength();
@@ -567,13 +570,13 @@ public class SimplePuzzleState implements PuzzleState {
 			nextState.stateOperation = Operation.MOVERIGHT;
 			//nextState.printArr();
 			nextState.puzState[row][column+1] =  nextState.puzState[row][column+1] ^ nextState.puzState[row][column] ^ ( nextState.puzState[row][column] = nextState.puzState[row][column+1] );         
-			System.out.println("moveed r drag");
+			//System.out.println("moveed r drag");
 
 			//nextState.printArr();
 			nextState.newLength();
 		}
 		
-		System.out.println("leaving");
+		//System.out.println("leaving");
 
 		return nextState;
 	}
@@ -651,7 +654,7 @@ public class SimplePuzzleState implements PuzzleState {
 				//System.out.println("case 2 ENTERED");
 				pickedEmpty[0] = empty2[0];
 				pickedEmpty[1] = empty2[1];
-				pickedMoves = empty1moves;
+				pickedMoves = empty2moves;
 				checkmate = true;
 				}
 				break;
@@ -660,15 +663,15 @@ public class SimplePuzzleState implements PuzzleState {
 				
 				pickedEmpty[0] = empty3[0];
 				pickedEmpty[1] = empty3[1];
-				pickedMoves = empty1moves;
+				pickedMoves = empty3moves;
 				checkmate = true;
 				}
 				break;
 			
 		}
 		}
-		System.out.println("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
-		System.out.println(java.util.Arrays.toString(pickedEmpty));
+		//System.out.println("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
+		//System.out.println(java.util.Arrays.toString(pickedEmpty));
 
 		newState = moverPicker(pickedEmpty,pickedMoves);
 		//System.out.println("---------------------");
@@ -688,9 +691,9 @@ public class SimplePuzzleState implements PuzzleState {
 		SimplePuzzleState newState = new SimplePuzzleState();
 		boolean check = false;
 		
-		System.out.println("I CHOOSE YOU");
-		System.out.println(java.util.Arrays.toString(pickedEmpty));
-		System.out.println(java.util.Arrays.toString(emptyMoves));
+		//System.out.println("I CHOOSE YOU");
+		//System.out.println(java.util.Arrays.toString(pickedEmpty));
+		//System.out.println(java.util.Arrays.toString(emptyMoves));
 			
 		while(check != true) {
 		int x = (int)Math.round((Math.random()*((3-1)+1))+0);
@@ -700,7 +703,7 @@ public class SimplePuzzleState implements PuzzleState {
 			if (emptyMoves[0] == 1) {
 				
 				
-				newState = moveRandom(pickedEmpty[0],pickedEmpty[1]+1, Operation.MOVEUP);
+				newState = moveRandom(pickedEmpty[0]-1,pickedEmpty[1], Operation.MOVEDOWN);
 				
 				check = true;
 			}
@@ -708,7 +711,8 @@ public class SimplePuzzleState implements PuzzleState {
 		case 1: 
 			//MOVEUP so MOVEDOWN
 			if (emptyMoves[1] == 1) {
-				newState = moveRandom(pickedEmpty[0],pickedEmpty[1]-1, Operation.MOVEDOWN);
+				//System.out.println("EmptyMoves[1] == 1");
+				newState = moveRandom(pickedEmpty[0]+1,pickedEmpty[1], Operation.MOVEUP);
 				
 				check = true;
 			}
@@ -716,7 +720,8 @@ public class SimplePuzzleState implements PuzzleState {
 		case 2: 
 			//MOVEUP so MOVEDOWN
 			if (emptyMoves[2] == 1) {
-				newState =  moveRandom(pickedEmpty[0]-1,pickedEmpty[1], Operation.MOVERIGHT);
+				//System.out.println("EmptyMoves[2] == 1");
+				newState =  moveRandom(pickedEmpty[0],pickedEmpty[1]-1, Operation.MOVERIGHT);
 				
 				check = true;
 			}
@@ -724,8 +729,9 @@ public class SimplePuzzleState implements PuzzleState {
 		case 3: 
 			//MOVEUP so MOVEDOWN
 			if (emptyMoves[3] == 1) {
-				//System.out.println("movingleft from " + pickedEmpty[0] + " " + (pickedEmpty[0] +1 ));
-				newState = moveRandom(pickedEmpty[0]+1,pickedEmpty[1], Operation.MOVELEFT);
+				
+				//System.out.println("EmptyMoves[3] == 1");
+				newState = moveRandom(pickedEmpty[0],pickedEmpty[1]+1, Operation.MOVELEFT);
 				
 				check = true;
 			}
@@ -738,13 +744,18 @@ public class SimplePuzzleState implements PuzzleState {
 
 	public SimplePuzzleState moveRandom(int row, int column, Operation op) {
 		//System.out.println("possMoves of " + row + " " + column);
+		//System.out.println("Operation " + op);
 		
-		int[] movesArr = possMoves(row, column);
+		/*int temp = row;
+		row = column;
+		column = temp;
+		 */
+		//int[] movesArr = possMoves(row, column);
 	
 		
-		boolean possMovesStartBool = IntStream.of(movesArr).anyMatch(x -> x == 1);
+		//boolean possMovesStartBool = IntStream.of(movesArr).anyMatch(x -> x == 1);
 	
-		if (!possMovesStartBool) {
+		/*if (!possMovesStartBool) {
 			return null;
 		}
 		
@@ -757,6 +768,7 @@ public class SimplePuzzleState implements PuzzleState {
 		} else if (movesArr[3] == 1) {
 			op = Operation.MOVERIGHT;
 		} 
+		*/
 		
 		
 		//may not be giving the right parent
@@ -858,7 +870,7 @@ public class SimplePuzzleState implements PuzzleState {
 		if (this.parent == null) {
 			return this;
 		}
-		return parent;
+		return this;
 	}
 
 }
