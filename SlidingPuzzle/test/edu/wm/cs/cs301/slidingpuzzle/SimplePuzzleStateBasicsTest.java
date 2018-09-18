@@ -282,6 +282,7 @@ public class SimplePuzzleStateBasicsTest {
 		System.out.println("SHUFFLE SHUFFLE SHUFFLE");
 		assertEquals(s1,sum(ps2, dim));
 		System.out.println("SHUFFLE SHUFFLE SHUFFLE");
+		ps2.printArr();
 		ps2 = ps1.shuffleBoard(3);
 		System.out.println("SHUFFLE SHUFFLE SHUFFLE");
 		assertEquals(s1,sum(ps2, dim));

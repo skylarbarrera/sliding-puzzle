@@ -274,7 +274,7 @@ public class SimplePuzzleState implements PuzzleState {
 	public int[] possMoves(int row, int column) {
 		// array to give all possible moves, {up, down, left , right}
 		int[] possMovesArr = {0,0,0,0};
-		if (row == 3 && column ==3) {
+		if (row > 3 || column >3) {
 			System.out.println("ERROR ERROR");
 		}
 		System.out.println("row col" + row + " " + column);
@@ -553,7 +553,7 @@ public class SimplePuzzleState implements PuzzleState {
 			nextState.stateOperation = Operation.MOVEDOWN;
 			nextState.puzState[row+1][column] =  nextState.puzState[row+1][column] ^ nextState.puzState[row][column] ^ ( nextState.puzState[row][column] = nextState.puzState[row+1][column] );         
 			System.out.println("move DOWN drag");
-			nextState.printArr();
+			//nextState.printArr();
 			nextState.newLength();
 		}
 		if (op == Operation.MOVELEFT) {
@@ -565,11 +565,11 @@ public class SimplePuzzleState implements PuzzleState {
 		if (op == Operation.MOVERIGHT) {
 			System.out.println("move right drag");
 			nextState.stateOperation = Operation.MOVERIGHT;
-			nextState.printArr();
+			//nextState.printArr();
 			nextState.puzState[row][column+1] =  nextState.puzState[row][column+1] ^ nextState.puzState[row][column] ^ ( nextState.puzState[row][column] = nextState.puzState[row][column+1] );         
 			System.out.println("moveed r drag");
 
-			nextState.printArr();
+			//nextState.printArr();
 			nextState.newLength();
 		}
 		
@@ -579,7 +579,7 @@ public class SimplePuzzleState implements PuzzleState {
 	}
 
 	public SimplePuzzleState getRandomEmpty(){
-		printArr();
+		//printArr();
 		//System.out.println("Entered RandomEmpty");
 		SimplePuzzleState newState = new SimplePuzzleState();
 		int[] pickedEmpty = new int[2];
