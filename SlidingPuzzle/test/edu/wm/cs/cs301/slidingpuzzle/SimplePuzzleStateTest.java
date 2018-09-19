@@ -127,6 +127,9 @@ public class SimplePuzzleStateTest {
 		assertTrue(testSequence[0].equals(testSequence[6]));
 		assertTrue(testSequence[0].hashCode() == testSequence[6].hashCode());
 		// second and second to last state are equal and they are not the initial state
+		testSequence[1].printArr();
+		System.out.println(" and testsequence 5 is ");
+		testSequence[5].printArr();
 		assertTrue(testSequence[1].equals(testSequence[5]));
 		assertTrue(testSequence[1].hashCode() == testSequence[5].hashCode());
 		// third and third to last state are equal and they are not the initial state
