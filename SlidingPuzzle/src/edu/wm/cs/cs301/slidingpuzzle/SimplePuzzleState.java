@@ -90,7 +90,7 @@ public class SimplePuzzleState implements PuzzleState {
 		return false;
 		
 	}
-	
+	//comment
 	@Override
 	public int hashCode() {
 		int hasher = 31;
