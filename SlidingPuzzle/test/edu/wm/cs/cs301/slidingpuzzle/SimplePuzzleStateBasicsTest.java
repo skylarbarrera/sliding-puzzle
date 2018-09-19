@@ -250,8 +250,6 @@ public class SimplePuzzleStateBasicsTest {
 		assertTrue(ps1.equals(ps2));
 		// use shuffle operation, length 1 should give different state
 		ps2 = ps1.shuffleBoard(1);
-		
-		
 		assertFalse(ps1.equals(ps2));
 		// 2nd try with length 2, see if we can do more than 1 step
 		ps2 = ps1.shuffleBoard(2);
@@ -279,12 +277,8 @@ public class SimplePuzzleStateBasicsTest {
 		assertEquals(s1,sum(ps2, dim));
 		// try the same property but for longer sequences
 		ps2 = ps1.shuffleBoard(2);
-		System.out.println("SHUFFLE SHUFFLE SHUFFLE");
 		assertEquals(s1,sum(ps2, dim));
-		System.out.println("SHUFFLE SHUFFLE SHUFFLE");
-		ps2.printArr();
 		ps2 = ps1.shuffleBoard(3);
-		System.out.println("SHUFFLE SHUFFLE SHUFFLE");
 		assertEquals(s1,sum(ps2, dim));
 		ps2 = ps1.shuffleBoard(4);
 		assertEquals(s1,sum(ps1, dim));
@@ -337,9 +331,7 @@ public class SimplePuzzleStateBasicsTest {
 		// try a second move starting from ps1 again
 		// note that only ps2 is the result of a move operation
 		// ps1 should stay as it was, we compare it with ps3.
-		System.out.println("failed comparison MoveTest");
 		assertEquals(ps1,ps3);
-		
 		assertFalse(ps1.isEmpty(2, 1));
 		assertTrue(ps1.isEmpty(2, 2));
 		// last position: lower right is empty (2,2)
@@ -356,9 +348,9 @@ public class SimplePuzzleStateBasicsTest {
 	 */
 	@Test
 	public final void testDrag() {
-		SimplePuzzleState ps1 = new SimplePuzzleState();
+		PuzzleState ps1 = new SimplePuzzleState();
 		PuzzleState ps2;
-		SimplePuzzleState ps3  = new SimplePuzzleState();
+		PuzzleState ps3  = new SimplePuzzleState();
 		
 		ps1.setToInitialState(4,2);
 		ps3.setToInitialState(4,2);
@@ -376,14 +368,9 @@ public class SimplePuzzleStateBasicsTest {
 		assertTrue(ps2.isEmpty(2, 2));
 		assertFalse(ps2.isEmpty(2, 3));
 		assertTrue(ps2.isEmpty(3, 2));
-		
 		assertFalse(ps2.isEmpty(3, 3));
 		// check that ps1 did not change with the drag operation
-		
 		assertEquals(ps1,ps3);
-		
-		
-
 		// 2nd try, different direction
 		assertFalse(ps1.isEmpty(2, 2));
 		assertFalse(ps1.isEmpty(2, 3));
@@ -444,7 +431,6 @@ public class SimplePuzzleStateBasicsTest {
 		// this can no establish a loop so the successor state and one computed
 		// for the shortest path should be the same
 		ps3 = ps1.move(2,3,Operation.MOVEDOWN);
-		
 		ps2 = ps3.getStateWithShortestPath();
 		assertTrue(ps3.equals(ps2));
 	}

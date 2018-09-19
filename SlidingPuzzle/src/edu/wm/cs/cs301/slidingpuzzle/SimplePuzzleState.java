@@ -67,7 +67,7 @@ public class SimplePuzzleState implements PuzzleState {
 			return false;
 		}
 		if (!(obj instanceof SimplePuzzleState)) {
-			System.out.println("Objects not the same instance");
+			//System.out.println("Objects not the same instance");
 			return false;
 		}
 		
@@ -75,18 +75,22 @@ public class SimplePuzzleState implements PuzzleState {
 		
 		
 		if (java.util.Arrays.deepEquals(state.puzState,this.puzState)) {
-			System.out.println("Puzstates are the same");
+			//System.out.println("Puzstates are the same");
 			return true;
+		} 
+		if (state.empties != this.empties) {
+			return false;
 		}
-		if (this.hashCode() == obj.hashCode()) {
-			System.out.println("same hash");
+		
+		if (this.hashCode() == state.hashCode()) {
 			return true;
 		}
 		
 		
-		System.out.println("NOT same hash");
+		
+		//System.out.println("NOT same hash");
 
-		System.out.println("not equal");
+		//System.out.println("not equal");
 		return false;
 		
 	}
@@ -95,6 +99,10 @@ public class SimplePuzzleState implements PuzzleState {
 	public int hashCode() {
 		int hasher = 31;
 		hasher = dimen * 12 * hasher  + empty1[0] + empty1[1] ;
+		if (this.puzState != null) {
+			hasher = hasher * puzState[dimen-1][dimen-1];
+			hasher = hasher - puzState[2][2];
+		}
 		//System.out.println(hasher);
 		return hasher;
 	}
@@ -118,7 +126,7 @@ public class SimplePuzzleState implements PuzzleState {
 		
 	
 		
-		System.out.println("Puzzle Reset");
+		//System.out.println("Puzzle Reset");
 		if (numberOfEmptySlots == 3) {
 			puzState[dimension-1][dimension-1] = 0;
 			puzState[dimension-1][dimension- 2] = 0;
@@ -356,20 +364,15 @@ public class SimplePuzzleState implements PuzzleState {
 	@Override
 	public PuzzleState drag(int startRow, int startColumn, int endRow, int endColumn) {
 		//check if end cell is empty else return null
-		if (puzState[endRow][endColumn] != 0) {
-			return null;
-		}
-		int[] possMovesStart = possMoves(startRow, startColumn);
-		boolean possMovesStartBool = IntStream.of(possMovesStart).anyMatch(x -> x == 1);
-		if (!possMovesStartBool ) {
-			return null;
-		} 
+		
 		ArrayList<Integer> emptyLoad = new ArrayList<Integer>();
 		ArrayList<Integer> moveLoad = dragHelper(startRow,startColumn,endRow,endColumn, emptyLoad);
 		//System.out.println("moveLoad");
 		//System.out.println(moveLoad);
 		SimplePuzzleState nextState = new SimplePuzzleState();
 		nextState = (SimplePuzzleState)dragMoveCaller(moveLoad,this);
+		
+		
 		
 		
 		
@@ -524,7 +527,8 @@ public class SimplePuzzleState implements PuzzleState {
 				
 		}
 		if (!movesStack.isEmpty()) {
-			nextState = (SimplePuzzleState)nextState.dragMoveCaller(movesStack,now);
+			nextState.next = (SimplePuzzleState)nextState.dragMoveCaller(movesStack,now);
+			return nextState.next;
 		}
 		
 		
@@ -542,7 +546,7 @@ public class SimplePuzzleState implements PuzzleState {
 		this.next = nextState;
 		
 		if (op == Operation.MOVEUP) {
-			System.out.println("move up drag");
+			//System.out.println("move up drag");
 			//System.out.println(stateOperation);
 			nextState.stateOperation = Operation.MOVEUP;
 			//System.out.println("AFTERDRAG" + stateOperation);
@@ -552,7 +556,7 @@ public class SimplePuzzleState implements PuzzleState {
 		}
 		
 		if (op == Operation.MOVEDOWN) {
-			System.out.println("move down drag");
+			//System.out.println("move down drag");
 			nextState.stateOperation = Operation.MOVEDOWN;
 			nextState.puzState[row+1][column] =  nextState.puzState[row+1][column] ^ nextState.puzState[row][column] ^ ( nextState.puzState[row][column] = nextState.puzState[row+1][column] );         
 			//System.out.println("move DOWN drag");
@@ -560,13 +564,13 @@ public class SimplePuzzleState implements PuzzleState {
 			nextState.newLength();
 		}
 		if (op == Operation.MOVELEFT) {
-			System.out.println("move left drag");
+			//System.out.println("move left drag");
 			nextState.stateOperation = Operation.MOVELEFT;
 			nextState.puzState[row][column-1] =  nextState.puzState[row][column-1] ^ nextState.puzState[row][column] ^ ( nextState.puzState[row][column] = nextState.puzState[row][column-1] );         
 			nextState.newLength();
 		}
 		if (op == Operation.MOVERIGHT) {
-			System.out.println("move right drag");
+			//System.out.println("move right drag");
 			nextState.stateOperation = Operation.MOVERIGHT;
 			//nextState.printArr();
 			nextState.puzState[row][column+1] =  nextState.puzState[row][column+1] ^ nextState.puzState[row][column] ^ ( nextState.puzState[row][column] = nextState.puzState[row][column+1] );         
@@ -780,7 +784,7 @@ public class SimplePuzzleState implements PuzzleState {
 		this.next = nextState;
 		
 		if (op == Operation.MOVEUP) {
-			System.out.println("move up");
+			//System.out.println("move up");
 			nextState.stateOperation = Operation.MOVEUP;
 		
 			nextState.puzState[row-1][column] =  nextState.puzState[row-1][column] ^ nextState.puzState[row][column] ^ ( nextState.puzState[row][column] = nextState.puzState[row-1][column] );
@@ -788,19 +792,18 @@ public class SimplePuzzleState implements PuzzleState {
 		}
 		
 		if (op == Operation.MOVEDOWN) {
-			System.out.println("move down");
+			//System.out.println("move down");
 			nextState.stateOperation = Operation.MOVEDOWN;
 			nextState.puzState[row+1][column] =  nextState.puzState[row+1][column] ^ nextState.puzState[row][column] ^ ( nextState.puzState[row][column] = nextState.puzState[row+1][column] );         
 			nextState.newLength();
 		}
 		if (op == Operation.MOVELEFT) {
-			System.out.println("move left");
+			//System.out.println("move left");
 			nextState.stateOperation = Operation.MOVELEFT;
 			nextState.puzState[row][column-1] =  nextState.puzState[row][column-1] ^ nextState.puzState[row][column] ^ ( nextState.puzState[row][column] = nextState.puzState[row][column-1] );         
 			nextState.newLength();
 		}
 		if (op == Operation.MOVERIGHT) {
-			
 			nextState.stateOperation = Operation.MOVERIGHT;
 			nextState.puzState[row][column+1] =  nextState.puzState[row][column+1] ^ nextState.puzState[row][column] ^ ( nextState.puzState[row][column] = nextState.puzState[row][column+1] );         
 			nextState.newLength();
@@ -822,8 +825,11 @@ public class SimplePuzzleState implements PuzzleState {
 	}
 	
 	
-	public SimplePuzzleState shuffleRecursive(int pathLength) {
+	public SimplePuzzleState shuffleRecursive(int pathLength, int recur) {
 		SimplePuzzleState newState = new SimplePuzzleState();
+		if (recur == pathLength) {
+			return this;
+		}
 		if (this.length == pathLength) {
 			return this;
 		}
@@ -833,7 +839,7 @@ public class SimplePuzzleState implements PuzzleState {
 			if (newState.length == pathLength) {
 				return newState;
 			} else {
-			newState = newState.shuffleRecursive(pathLength);
+			newState = newState.shuffleRecursive(pathLength, recur+1);
 			}
 		
 	}
@@ -849,7 +855,7 @@ public class SimplePuzzleState implements PuzzleState {
 	@Override
 	public PuzzleState shuffleBoard(int pathLength) {
 		SimplePuzzleState newState = new SimplePuzzleState();
-		newState = shuffleRecursive(pathLength);
+		newState = shuffleRecursive(pathLength,0);
 		return newState;
 		
 	}

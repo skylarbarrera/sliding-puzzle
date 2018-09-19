@@ -50,10 +50,7 @@ public interface PuzzleState {
 	 * Operation. Note that MOVERIGHT means that a tile moves to the right and
 	 * the slot to its right need to be empty for this to be possible. 
 	 */
-	
-
-	public enum Operation{ MOVERIGHT, MOVELEFT, MOVEUP, MOVEDOWN }
-	
+	public enum Operation{ MOVERIGHT, MOVELEFT, MOVEUP, MOVEDOWN } ;
 	/**
 	 * Sets or resets PuzzleState object to the initial (final) state of a game
 	 * with the given dimension and number of empty slots.
@@ -72,7 +69,6 @@ public interface PuzzleState {
 	 * @param column is the column index, range 0,1,..., dimension-1
 	 * @return value for the tile at the given position, range 0,1,...,dimension^2-1
 	 */
-	
 	public int getValue(int row, int column);
 	/**
 	 * Get the parent state which is the state from which the current state was reached.
@@ -92,7 +88,6 @@ public interface PuzzleState {
 	 * @return previously stored Operation or null if there is none.
 	 */
 	public Operation getOperation() ;
-	public void printArr();
 
 	/**
 	 * Get length of the path from initial state to the current state.
@@ -179,6 +174,5 @@ public interface PuzzleState {
 	 * @return new state object that can substitute the current state and has
 	 * shortest possible path to solution (initial) state.
 	 */
-	 
 	public PuzzleState getStateWithShortestPath();
 }
