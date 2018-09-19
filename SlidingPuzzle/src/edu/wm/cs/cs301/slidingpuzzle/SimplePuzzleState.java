@@ -117,7 +117,7 @@ public class SimplePuzzleState implements PuzzleState {
 		}
 		
 	
-		
+		//we did it
 		System.out.println("Puzzle Reset");
 		if (numberOfEmptySlots == 3) {
 			puzState[dimension-1][dimension-1] = 0;
