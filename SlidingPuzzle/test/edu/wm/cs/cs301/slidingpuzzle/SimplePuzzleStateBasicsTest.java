@@ -255,6 +255,9 @@ public class SimplePuzzleStateBasicsTest {
 		assertFalse(ps1.equals(ps2));
 		// 2nd try with length 2, see if we can do more than 1 step
 		ps2 = ps1.shuffleBoard(2);
+		System.out.println("!AAAAAAAAAAAAAAAAAAAAAAAAAOOOOOOOOOOOOOOOO");
+
+		ps2.printArr();
 		assertFalse(ps1.equals(ps2));
 	}
 	/**

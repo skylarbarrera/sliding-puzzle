@@ -125,6 +125,14 @@ public class SimplePuzzleStateTest {
 		// states that are equal must have the same hash code
 		// first and last state in the test sequence are equal
 		assertTrue(testSequence[0].equals(testSequence[6]));
+		System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+		System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+		System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+		testSequence[0].printArr();
+		testSequence[6].printArr();
+		
+		System.out.println(testSequence[0].hashCode());
+		System.out.println(testSequence[6].hashCode());
 		assertTrue(testSequence[0].hashCode() == testSequence[6].hashCode());
 		// second and second to last state are equal and they are not the initial state
 		testSequence[1].printArr();
@@ -630,6 +638,12 @@ public class SimplePuzzleStateTest {
 		PuzzleState ps6V2 = ps5V2.move(3, 2, Operation.MOVERIGHT);
 		assertNotNull(ps6V2);
 		// intermediate states differ
+		System.out.println("QQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQ");
+		ps5V1.printArr();
+		System.out.println("QQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQ");
+
+		ps5V1.printArr();
+		System.out.println("QQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQ");
 		assertFalse("Comparing state " + ps5V1 + " with " + ps5V1, ps5V1.equals(ps5V2));
 		// final states agree
 		assertTrue("Comparing state " + ps6V2 + " with " + test, ps6V2.equals(test));
@@ -770,6 +784,14 @@ public class SimplePuzzleStateTest {
 		assertNotNull(ps4);
 		assertTrue("Comparing state " + ps4 + " with " + test, ps4.equals(test));
 		PuzzleState parent = test.getParent();
+		System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+
+		parent.printArr();
+		System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+
+		ps3.printArr();
+		System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+
 		assertTrue("Comparing state " + ps3 + " with " + parent, ps3.equals(parent));
 		parent = parent.getParent();
 		assertTrue("Comparing state " + ps2 + " with " + parent, ps2.equals(parent));

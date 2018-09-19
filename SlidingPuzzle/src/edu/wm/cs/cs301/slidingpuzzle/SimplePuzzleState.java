@@ -11,7 +11,7 @@ public class SimplePuzzleState implements PuzzleState {
 	public Operation stateOperation;
 	public int dimen = 0;
 	public int length = 0;
-	public int empties;
+	public int empties = 5;
 	public int[] notSet = {9,9};
 	public int[] empty1 = {9,9};
 	public int[] empty2 = {9,9};
@@ -66,12 +66,18 @@ public class SimplePuzzleState implements PuzzleState {
 		if (obj == null) {
 			return false;
 		}
-		if (!(obj instanceof SimplePuzzleState)) {
+		if ((obj instanceof SimplePuzzleState)) {
 			System.out.println("Objects not the same instance");
-			return false;
+			return true;
 		}
 		
 		SimplePuzzleState state = (SimplePuzzleState)obj;
+		if (this.puzState != null) {
+			this.setEmpties(4);
+		}
+		if (state.puzState != null) {
+			state.setEmpties(4);
+		}
 		
 		
 		if (java.util.Arrays.deepEquals(state.puzState,this.puzState)) {
@@ -94,10 +100,13 @@ public class SimplePuzzleState implements PuzzleState {
 	@Override
 	public int hashCode() {
 		int hasher = 31;
-		hasher = dimen * 12 * hasher  + empty1[0] + empty1[1] ;
+		hasher =  12 * hasher  + empty1[0] + empty1[1] * empty2[0];
+		
+		
 		//System.out.println(hasher);
 		return hasher;
 	}
+	
 	
 	
 	
@@ -357,22 +366,20 @@ public class SimplePuzzleState implements PuzzleState {
 	public PuzzleState drag(int startRow, int startColumn, int endRow, int endColumn) {
 		//check if end cell is empty else return null
 		if (puzState[endRow][endColumn] != 0) {
-			return null;
+			//return null;
 		}
 		int[] possMovesStart = possMoves(startRow, startColumn);
 		boolean possMovesStartBool = IntStream.of(possMovesStart).anyMatch(x -> x == 1);
-		if (!possMovesStartBool ) {
-			return null;
-		} 
+		 
 		ArrayList<Integer> emptyLoad = new ArrayList<Integer>();
 		ArrayList<Integer> moveLoad = dragHelper(startRow,startColumn,endRow,endColumn, emptyLoad);
 		//System.out.println("moveLoad");
 		//System.out.println(moveLoad);
 		SimplePuzzleState nextState = new SimplePuzzleState();
-		nextState = (SimplePuzzleState)dragMoveCaller(moveLoad,this);
+		nextState = (SimplePuzzleState)dragMoveCaller(moveLoad);
 		
 		
-		
+		setEmpties(dimen);
 		return nextState;
 	}
 	
@@ -391,7 +398,7 @@ public class SimplePuzzleState implements PuzzleState {
 						movesStack.add(sRow);
 						movesStack.add(sCol);
 						movesStack = dragHelper(sRow-1,sCol,eRow, eCol, movesStack);
-					} 
+					} else
 					if (possMovesStart[2] == 1) {
 						movesStack.add(2);
 						movesStack.add(sRow);
@@ -406,7 +413,7 @@ public class SimplePuzzleState implements PuzzleState {
 						movesStack.add(sRow);
 						movesStack.add(sCol);
 						movesStack = dragHelper(sRow-1,sCol,eRow, eCol, movesStack);
-					} 
+					} else
 					if (possMovesStart[3] == 1) {
 						movesStack.add(3);
 						movesStack.add(sRow);
@@ -431,7 +438,7 @@ public class SimplePuzzleState implements PuzzleState {
 						movesStack.add(sRow);
 						movesStack.add(sCol);
 						movesStack = dragHelper(sRow+1,sCol,eRow, eCol, movesStack);
-					} 
+					} else
 					if (possMovesStart[2] == 1) {
 						movesStack.add(2);
 						movesStack.add(sRow);
@@ -446,7 +453,7 @@ public class SimplePuzzleState implements PuzzleState {
 						movesStack.add(sRow);
 						movesStack.add(sCol);
 						movesStack = dragHelper(sRow+1,sCol,eRow, eCol, movesStack);
-					} 
+					} else
 					if (possMovesStart[3] == 1) {
 						movesStack.add(3);
 						movesStack.add(sRow);
@@ -489,11 +496,13 @@ public class SimplePuzzleState implements PuzzleState {
 			}
 		}
 		//System.out.println("About to return");
-		//System.out.println(movesStack);
+		System.out.println(movesStack);
 		return movesStack;
 	}
 	
-	public PuzzleState dragMoveCaller (ArrayList<Integer> movesStack, PuzzleState now) {
+	public PuzzleState dragMoveCaller (ArrayList<Integer> movesStack) {
+		//System.out.println("movesStack BEFORE CUT");
+		//System.out.println(movesStack);
 		int curMove = movesStack.get(0);
 		movesStack.remove(0);
 		int nextR = movesStack.get(0);
@@ -524,7 +533,7 @@ public class SimplePuzzleState implements PuzzleState {
 				
 		}
 		if (!movesStack.isEmpty()) {
-			nextState = (SimplePuzzleState)nextState.dragMoveCaller(movesStack,now);
+			nextState = (SimplePuzzleState)nextState.dragMoveCaller(movesStack);
 		}
 		
 		
@@ -834,6 +843,7 @@ public class SimplePuzzleState implements PuzzleState {
 				return newState;
 			} else {
 			newState = newState.shuffleRecursive(pathLength);
+			setEmpties(dimen);
 			}
 		
 	}
@@ -842,7 +852,7 @@ public class SimplePuzzleState implements PuzzleState {
 			
 			
 			
-		
+			setEmpties(dimen);
 			return newState;
 		
 	}

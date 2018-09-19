@@ -93,6 +93,7 @@ public interface PuzzleState {
 	 */
 	public Operation getOperation() ;
 	public void printArr();
+	public void setEmpties(int dimen);
 
 	/**
 	 * Get length of the path from initial state to the current state.
